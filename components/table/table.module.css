@@ -1,0 +1,9 @@
+.spinnerContainer {
+    display: grid;
+    justify-content: center;
+}
+
+.table {
+    margin: auto;
+    max-height: 500px;
+}

@@ -1,0 +1,15 @@
+.page {
+    margin: 0 20px;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.buttonContainer {
+    margin: 40px;
+    display: flex;
+    justify-content: end;;
+}
