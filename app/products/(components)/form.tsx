@@ -104,8 +104,9 @@ export default function ProductForm({
         body: JSON.stringify(body),
       });
       const newProduct = await res.json();
-      router.push(`/products/${newProduct.id}`);
       onSubmitSuccess?.(newProduct);
+      router.refresh();
+      router.push(`/products/${newProduct.id}`);
     } catch (error) {
       console.error(error);
     }

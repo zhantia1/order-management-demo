@@ -106,8 +106,9 @@ export default function OrderForm({
         body: JSON.stringify(body),
       });
       const newOrder = await res.json();
-      router.push(`/orders/${newOrder.id}`);
       onSubmitSuccess?.(newOrder);
+      router.refresh();
+      router.push(`/orders/${newOrder.id}`);
     } catch (error) {
       console.error(error);
     }

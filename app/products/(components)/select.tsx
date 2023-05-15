@@ -22,7 +22,6 @@ export default function ProductSelect({
   const [inputValue, setInputValue] = useState("");
   const [options, setOptions] = useState<readonly Product[]>([]);
   const [loading, setLoading] = useState(false);
-  const [loadingOne, setLoadingOne] = useState(false);
 
   useEffect(() => {
     // if values match then no need to do anything
@@ -34,6 +33,7 @@ export default function ProductSelect({
     // else fetch
     if (idValue) {
       const getProduct = async () => {
+        setLoading(true);
         const body: ProductGetRequest = {
           id: idValue,
         };
@@ -49,6 +49,8 @@ export default function ProductSelect({
           }
         } catch (error) {
           console.log(error);
+        } finally {
+          setLoading(false);
         }
       };
       getProduct();
@@ -73,6 +75,7 @@ export default function ProductSelect({
       };
 
       try {
+        setLoading(true);
         const res = await fetch("/api/product/search", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -94,6 +97,8 @@ export default function ProductSelect({
         }
       } catch (error) {
         console.error(error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -104,15 +109,14 @@ export default function ProductSelect({
     };
   }, [value, inputValue]);
 
-  const isLoading = (value === null && loading) || loadingOne;
+  const isLoading = value === null && loading;
 
   return (
     <Autocomplete
       disabled={disabled}
       loading={isLoading}
-      getOptionLabel={(option) =>
-        isLoading ? "Loading..." : `${option.name} (ID: ${option.id})`
-      }
+      loadingText="Loading..."
+      getOptionLabel={(option) => `${option.name} (ID: ${option.id})`}
       filterOptions={(x) => x}
       options={options}
       autoComplete
